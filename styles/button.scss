@@ -7,9 +7,20 @@
               0 3px 1px -2px rgba(0, 0, 0, 0.14),
               0 1px 5px 0 rgba(0, 0, 0, 0.12);
   border: none;
+
+  // this line is not important; I merely wanted to create a little space so that the button would not be so close to the side of the screen
   margin-left: 30px;
-  padding: 10px;
+
+  // this section can be used to determine the size of the button
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+
+  // this section can be used to change the size of the font inside the button
+  font-size: 1em;
   font-weight: 500;
+
   background: rgb(232, 232, 232); // resting button background color
   color: rgb(0,0,0); // resting button text color
 
@@ -24,10 +35,10 @@
   }
 
   &:disabled:hover {
-    -webkit-animation-name: thumb;
-	  -webkit-animation-duration: 200ms;
+    -webkit-animation-name: mybutton;
+	  -webkit-animation-duration: 300ms;
 	  -webkit-transform-origin:50% 50%;
-	  -webkit-animation-iteration-count: 2;
+	  -webkit-animation-iteration-count: 1;
 	  -webkit-animation-timing-function: linear;
   }
 
@@ -36,7 +47,7 @@
   }
 
   &:enabled:active {
-    background: rgb(189,189,189);
+    background: rgb(189,189,189); // clicked button background color
   }
 
   &:focus {
@@ -45,7 +56,7 @@
 
 }
 
-@-webkit-keyframes thumb {
+@-webkit-keyframes mybutton {
 
   0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
 	10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
