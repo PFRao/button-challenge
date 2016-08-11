@@ -1,58 +1,80 @@
 // TODO: DEFINE YOUR BUTTON STYLES HERE
 
-#new-button {
+%button-styles {
 
-  font-family: 'Roboto', sans-serif;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
-              0 3px 1px -2px rgba(0, 0, 0, 0.14),
-              0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  border: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
+                0 3px 1px -2px rgba(0, 0, 0, 0.14),
+                0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border: none;
+    font-weight: 500;
 
-  // this line is not important; I merely wanted to create a little space so that the button would not be so close to the side of the screen
-  margin-left: 30px;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1),
+    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  // this section can be used to determine the size of the button
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-
-  // this section can be used to change the size of the font inside the button
-  font-size: 1em;
-  font-weight: 500;
-
-  background: rgb(232, 232, 232); // resting button background color
-  color: rgb(0,0,0); // resting button text color
-
-  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1),
-              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:disabled {
-    background: rgba(0,0,0,.12); // disabled button background color
-    color: rgb(164,164,164); // disabled button text color
-    box-shadow: none;
-  }
-
-  &:disabled:hover {
-    -webkit-animation-name: mybutton;
-	  -webkit-animation-duration: 300ms;
-	  -webkit-transform-origin:50% 50%;
-	  -webkit-animation-iteration-count: 1;
-	  -webkit-animation-timing-function: linear;
-  }
+%enabled-hover {
 
   &:enabled:hover {
     box-shadow: 0 0 8px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.36);
   }
 
-  &:enabled:active {
-    background: rgb(189,189,189); // clicked button background color
-  }
+}
 
-  &:focus {
+%enabled-focus {
+
+  &:enabled:focus {
     outline: 0;
   }
+
+}
+
+%disabled-hover {
+
+  &:hover {
+    -webkit-animation-name: mybutton;
+    -webkit-animation-duration: 300ms;
+    -webkit-transform-origin:50% 50%;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: linear;
+  }
+
+}
+
+@mixin enabled-button($background: rgb(232, 232, 232), $color: rgb(0,0,0), $background-active: rgb(189,189,189)) {
+
+  background: $background;
+  color: $color;
+
+  @extend %button-styles;
+  @extend %enabled-hover;
+  @extend %enabled-focus;
+
+  &:enabled:active {
+    background: $background-active;
+  }
+
+}
+
+@mixin disabled-button($background: rgba(0,0,0,.12), $color: rgb(164,164,164)) {
+
+  background: $background;
+  color: $color;
+  box-shadow: none;
+
+  @extend %disabled-hover;
+
+}
+
+@mixin button-sizing($top: 10px, $right: 10px, $bottom: 10px, $left: 10px, $font-size: 1em, $font-family: 'Roboto') {
+
+  padding-top: $top;
+  padding-right: $right;
+  padding-bottom: $bottom;
+  padding-left: $left;
+
+  font-size: $font-size;
+  font-family: $font-family;
 
 }
 
@@ -69,5 +91,19 @@
 	80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
 	90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
 	100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+
+}
+
+#new-button {
+
+  // this line is not important; I merely wanted to create a little space so that the button would not be so close to the side of the screen
+  margin-left: 30px;
+
+  @include enabled-button;
+  @include button-sizing;
+
+  &:disabled {
+    @include disabled-button;
+  }
 
 }
